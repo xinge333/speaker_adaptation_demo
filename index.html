@@ -1,218 +1,410 @@
-<!DOCTYPE html>
-<!-- saved from url=(0041)https://keithito.github.io/audio-samples/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Audio Samples</title>
-  <style>
-body {
-  margin:0;
-  padding:10px 30px;
-  background: #fff;
-  color: #111;
-  font-size: 15px;
-  font-family: sans-serif;
-  font-weight: 400;
-  line-height: 1.8;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-audio {
-  width: 250px;
-  margin-right: 10px;
-}
-.sample {
-  font-size: 0.9em;
-  font-style: italic;
-  border: 1px solid #ddd;
-  padding: 1em;
-  margin-bottom: 1em;
-}
-</style>
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta name="google-site-verification" content="ftFOlJETX-2KNjaPh8W6s8lhigItRuu9fOmjHZZ0nY0" />
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  <title>A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING</title>
 </head>
+<style type="text/css">
+  /* table {
+    width: 100%;
+    table-layout: fixed;
+  } */
+
+  audio {
+  width: 220px;
+  margin-right: 10px;
+  }
+
+  .sample {
+    font-size: 0.9em;
+    font-style: italic;
+    border: 1px solid #ddd;
+    padding: 1em;
+    margin-bottom: 1em;
+  }
+
+  thead>tr>th:first-child {
+    width: 96px;
+  }
+
+  @media (max-width: 767px) {
+    .big-screen {
+      display: none;
+    }
+  }
+
+  @media (min-width: 767px) {
+    .small-screen {
+      display: none;
+    }
+  }
+</style>
+
 <body>
-  <h3>Audio samples in the paper <a href="https://arxiv.org/abs/" target=_blank> A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING </a> 
-  </h3>
-  <ul>
-    <li>The generative model is trained with the <a href="http://www.openslr.org/18/">THCHS-30</a>, which is an open Chinese speech corpus of 60 speakers. 
-      The audio samples contain the original recordings of the target speaker and the synthesized speech, and the contents of all synthesized speech are Chinese
-      mandarin. Our results consist of four parts:
-    <li>Part 1 and part 2 are the adaptive effects of Chinese female voices and male voices respectively. We compared the effects of our approach and baseline approach with different amounts of data.
-    <li>Part 3 and part 4 are respectively the adaptive effects of English female and male voices of our approach with different amounts of data.</li>
-  </ul>
+  <header class="header">
+    <div class="jumbotron bg-secondary text-center">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <h1><a class="text-light">
+                A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING <br> (Submitted to
+                ICASSP2019)</a></h1>
+            <p>
+              <div class="row">
+                <div class="col-md col-sm-12"><a class="text-light">Xinyong Zhou</a> </div>
+              </div>
+            </p>
+            <p><a class="text-light">
+                Shaanxi Provincial Key Lab of Speech and Image Information Processing <br>
+                School of Computer Science, Northwestern Polytechnical University, Xi’an, China
+            </p></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="row" id="intro">
+        <div class="col">
+          <h2>Abastract</h2>
+          <div>
+            <p>
+              For traditional speaker adaptation in text-to-speech (TTS), we generally use many multi-speaker's
+              audio-text pairs to train a generative model and fine-tune it with a small amount of target speaker data.
+              However, this approach will face two problems when it comes to cross-language. 
+              One is that such a large amount of paired data is difficult to obtain, 
+              and the other is that it is difficult for a single model to model mixed languages. </br>
+              
+              Recently, Phonetic PosteriorGrams (PPGs) has been successfully applied to non-parallel VC <a class="text-success"
+              href="#1">[1]</a>. Inspired by this, we propose a lanuage-independent speaker adaptation approach which 
+              utilizes the bottleneck feature from automatic speech recognition (ASR) model.
+              In this way, we just need a single speaker's audio-text pairs and multi-speaker's audio data, then we use
+              a speaker-independent ASR (SI-ASR) model to extract the bottleneck features corresponding to audio.
+              The proposed approach can not only solve the problem of data limitation in conventional method, 
+              but also realize cross-language speaker adaptation.
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row" id="baseline">
+        <div class="col">
+          <h2>Baseline Approach</h2>
+          <div>
+            <p>
+              We have compared the effects of proposed approach and baseline approach on Mandarin speakers.
+              The baseline experiment is ordinary speaker adaptation training approach based Tacotron2 shown as Figure 1.
+              We just use multi-speaker's audio-text pairs to train an generative model, then fine-tune it with a 
+              small amount of target speaker's data.
+            </p>
+            <br>
+            <div align="center">
+              <embed src="./image/baseline1.svg" style="display:block;width:900px;height:200px" />
+              <figcaption class="figure-caption text-center">
+                Figure1. Block diagram of baseline system.
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row" id="our">
+        <div class="col">
+          <h2>Proposed Approach</h2>
+          <div>
+            <p>
+              Our approach consists of two parts.
+              Firstly, We use text input and bottleneck feature of single speaker to train model 1 based on Tacotron2
+              <a class="text-success" href="#2">[2]</a>, which models the 
+              relationships between text and bottleneck feature. 
+              Besides, we need to train model 2 based on CBHG <a class="text-success" href="#3">[3]</a>
+              with multi-speaker's 
+              data, which models the mapping between bottleneck feature and acoustic feature.
+              We can regard mode 2 as generative voice conversion model, so we use a few minutes audio data of an
+              unseen speaker to fine-tune it.
+              Finally, we use a speaker-independent LPCNet <a class="text-success" href="#4">[4]</a> vocoder to 
+              synthesize speech of any content that contains the tone of the target speaker.
+            </p>
 
-  <p class="sample">
-    Part 1. Chinese female speaker 
-    <blockquote>
-    <table>
-    <tr>
-    <td>Recordings of target speaker</td> <td>Baseline (50 sentences)</td>
-    <td>Our approach (50 sentences)</td> <td>Baseline (200 sentences)</td>
-    <td>Our approach (200 sentences)</td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/A23/ori/A23_73.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009981.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/our/A23-50ju-2k/009981.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009981.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/A23/our/A23-200ju-4k/009981.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/A23/ori/A23_82.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009982.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/our/A23-50ju-2k/009982.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009982.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/A23/our/A23-200ju-4k/009982.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/A23/ori/A23_84.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009988.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/our/A23-50ju-2k/009988.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009988.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/A23/our/A23-200ju-4k/009988.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/A23/ori/A23_71.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009989.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/our/A23-50ju-2k/009989.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009989.wav" controls=""></audio><br></td>
-    <td colspan=2><audio src="online_demo/A23/our/A23-200ju-4k/009989.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/A23/ori/A23_55.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009992.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/our/A23-50ju-2k/009992.wav" controls=""></audio></td>
-    <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009992.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/A23/our/A23-200ju-4k/009992.wav" controls=""></audio><br></td>
-    </tr>
-    </table>
-    </blockquote>
-  </p>
-  
-  
-  <p class="sample">
-    Part 2. Chinese male speaker
-    <blockquote>
-    <table>
-    <tr>
-    <td>Recordings of target speaker</td> <td>Baseline (50 sentences)</td>
-    <td>Our approach (50 sentences)</td> <td>Baseline (200 sentences)</td>
-    <td>Our approach (200 sentences)</td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/feigou/ori/feigou00577.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009981.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009981.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009981.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009981.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/feigou/ori/feigou00588.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009982.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009982.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009982.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009982.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/feigou/ori/feigou00950.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009988.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009988.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009988.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009988.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/feigou/ori/feigou01613.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009989.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009989.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009989.wav" controls=""></audio><br></td>
-    <td colspan=2><audio src="online_demo/feigou/our/feigou-200ju-2k/009989.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/feigou/ori/feigou01970.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009992.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009992.wav" controls=""></audio></td>
-    <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009992.wav" controls=""></audio><br></td>
-    <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009992.wav" controls=""></audio><br></td>
-    </tr>
-    </table>
-    </blockquote>
-  </p>
+            <div align="center">
+              <embed src="./image/our.svg" style="display:block;width:1000px;height:500px" />
+              <figcaption class="figure-caption text-center">
+                Figure2. Block diagram of our proposed system.
+            </div>
 
- <p class="sample">
-    Part 3. English female speaker.
-    <blockquote>
-    <table>
-    <tr>
-    <td>Recordings of target speaker</td>
-    <td>Our approach (50 sentences)</td>
-    <td>Our approach (200 sentences)</td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/UK/ori/UK_f_00230.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-50ju-4k/009981.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-200ju-4k/009981.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/UK/ori/UK_f_00231.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-50ju-4k/009982.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-200ju-4k/009982.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/UK/ori/UK_f_00222.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-50ju-4k/009988.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-200ju-4k/009988.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/UK/ori/UK_f_00223.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-50ju-4k/009989.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-200ju-4k/009989.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/UK/ori/UK_f_00224.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-50ju-4k/009992.wav" controls=""></audio></td>
-    <td><audio src="online_demo/UK/our/uk-200ju-4k/009992.wav" controls=""></audio><br></td>
-    </tr>
-    </table>
-    </blockquote>
-  </p>
+            <br>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <div class="row" id="average">
+        <div class="col">
+          <h2>Audio samples</h2>
+          <div>
+              <ul>
+                  <li>The generative model is trained with the <a href="http://www.openslr.org/18/">THCHS-30</a>, which is an open Chinese speech corpus of 60 speakers. 
+                    The audio samples contain the original recordings of the target speaker and the synthesized speech, and the contents of all synthesized speech are Chinese
+                    Mandarin. Our results consist of four parts:
+                  <li>Part 1 and part 2 are the adaptive effects of Mandarin female and male speaker respectively. We compared the effects of our approach and baseline approach with different amounts of data.
+                  <li>Part 3 and part 4 are respectively the adaptive effects of English female and male speaker of our approach with different amounts of data.</li>
+                </ul>
+
+          </div>
+        </div>
+      </div>
 
 
-  <p class="sample">
-    Part 4. English male speaker.
-    <blockquote>
-    <table>
-    <tr>
-    <td>Recordings of target speaker</td>
-    <td>Our approach (50 sentences)</td>
-    <td>Our approach (200 sentences)</td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/EM-001/ori/EM-001-00001.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009981.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009981.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/EM-001/ori/EM-001-00002.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009982.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009982.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/EM-001/ori/EM-001-00003.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009988.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009988.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/EM-001/ori/EM-001-00004.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009989.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009989.wav" controls=""></audio><br></td>
-    </tr>
-    <tr>
-    <td><audio src="online_demo/EM-001/ori/EM-001-00005.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009992.wav" controls=""></audio></td>
-    <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009992.wav" controls=""></audio><br></td>
-    </tr>
-    </table>
-    </blockquote>
-  </p>
+      <p class="sample">
+          <b>Part 1. Mandarin female speaker</b>
+          <blockquote>
+          <table>
+          <tr>
+          <td>Recordings of target speaker</td> <td>Baseline (50 sentences)</td>
+          <td>Our approach (50 sentences)</td> <td>Baseline (200 sentences)</td>
+          <td>Our approach (200 sentences)</td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/A23/ori/A23_73.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009981.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/our/A23-50ju-2k/009981.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009981.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/A23/our/A23-200ju-4k/009981.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/A23/ori/A23_82.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009982.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/our/A23-50ju-2k/009982.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009982.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/A23/our/A23-200ju-4k/009982.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/A23/ori/A23_84.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009988.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/our/A23-50ju-2k/009988.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009988.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/A23/our/A23-200ju-4k/009988.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/A23/ori/A23_71.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009989.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/our/A23-50ju-2k/009989.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009989.wav" controls=""></audio><br></td>
+          <td colspan=2><audio src="online_demo/A23/our/A23-200ju-4k/009989.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/A23/ori/A23_55.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-50ju-retrain/009992.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/our/A23-50ju-2k/009992.wav" controls=""></audio></td>
+          <td><audio src="online_demo/A23/baseline/A23-200ju-retrain/009992.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/A23/our/A23-200ju-4k/009992.wav" controls=""></audio><br></td>
+          </tr>
+          </table>
+          </blockquote>
+        </p>
+        
+        
+        <p class="sample">
+          <b>Part 2. Mandarin male speaker</b>
+          <blockquote>
+          <table>
+          <tr>
+          <td>Recordings of target speaker</td> <td>Baseline (50 sentences)</td>
+          <td>Our approach (50 sentences)</td> <td>Baseline (200 sentences)</td>
+          <td>Our approach (200 sentences)</td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/feigou/ori/feigou00577.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009981.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009981.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009981.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009981.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/feigou/ori/feigou00588.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009982.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009982.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009982.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009982.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/feigou/ori/feigou00950.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009988.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009988.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009988.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009988.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/feigou/ori/feigou01613.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009989.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009989.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009989.wav" controls=""></audio><br></td>
+          <td colspan=2><audio src="online_demo/feigou/our/feigou-200ju-2k/009989.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/feigou/ori/feigou01970.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-50ju-retrain/009992.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/our/feigou-50ju-3k/009992.wav" controls=""></audio></td>
+          <td><audio src="online_demo/feigou/baseline/feigou-200ju-retrain/009992.wav" controls=""></audio><br></td>
+          <td><audio src="online_demo/feigou/our/feigou-200ju-2k/009992.wav" controls=""></audio><br></td>
+          </tr>
+          </table>
+          </blockquote>
+        </p>
+      
+        <p class="sample">
+            <b>Part 3. English female speaker.</b>
+            <blockquote>
+            <table>
+            <tr>
+            <td>Recordings of target speaker</td>
+            <td>Our approach (50 sentences)</td>
+            <td>Our approach (200 sentences)</td>
+            </tr>
+            <tr>
+            <td><audio src="online_demo/UK/ori/UK_f_00230.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-50ju-4k/009981.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-200ju-4k/009981.wav" controls=""></audio><br></td>
+            </tr>
+            <tr>
+            <td><audio src="online_demo/UK/ori/UK_f_00231.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-50ju-4k/009982.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-200ju-4k/009982.wav" controls=""></audio><br></td>
+            </tr>
+            <tr>
+            <td><audio src="online_demo/UK/ori/UK_f_00222.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-50ju-4k/009988.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-200ju-4k/009988.wav" controls=""></audio><br></td>
+            </tr>
+            <tr>
+            <td><audio src="online_demo/UK/ori/UK_f_00223.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-50ju-4k/009989.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-200ju-4k/009989.wav" controls=""></audio><br></td>
+            </tr>
+            <tr>
+            <td><audio src="online_demo/UK/ori/UK_f_00224.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-50ju-4k/009992.wav" controls=""></audio></td>
+            <td><audio src="online_demo/UK/our/uk-200ju-4k/009992.wav" controls=""></audio><br></td>
+            </tr>
+            </table>
+            </blockquote>
+          </p>
 
-</body></html>
+      <p class="sample">
+          <b>Part 4. English male speaker.</b>
+          <blockquote>
+          <table>
+          <tr>
+          <td>Recordings of target speaker</td>
+          <td>Our approach (50 sentences)</td>
+          <td>Our approach (200 sentences)</td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/EM-001/ori/EM-001-00001.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009981.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009981.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/EM-001/ori/EM-001-00002.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009982.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009982.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/EM-001/ori/EM-001-00003.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009988.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009988.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/EM-001/ori/EM-001-00004.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009989.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009989.wav" controls=""></audio><br></td>
+          </tr>
+          <tr>
+          <td><audio src="online_demo/EM-001/ori/EM-001-00005.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-50ju-3k/009992.wav" controls=""></audio></td>
+          <td><audio src="online_demo/EM-001/our/EM-001-200ju-6k/009992.wav" controls=""></audio><br></td>
+          </tr>
+          </table>
+          </blockquote>
+        </p>
+      
+        <hr>
+
+          <div class="row" id="ref">
+            <div class="col">
+              <h2>References</h2>
+              <div>
+                <p>
+                  <a name="1">[1]</a>
+                    Lifa Sun, Hao Wang, Shiyin Kang, Kun Li and Helen Meng, <a class="text-success"
+                    href="http://www1.se.cuhk.edu.hk/~hccl/publications/pub/2016_IS16_SunLifa.PDF">“Personalized,
+                    Cross-lingual TTS Using Phonetic Posteriorgrams</a>,” in <em>INTERSPEECH, 2016, pp. 322-326.</em>
+                </p>
+                <p>
+                  <a name="2">[2]</a>
+                    Shen J, Pang R, Weiss R J,
+                    <a class="text-success" href="https://arxiv.org/pdf/1712.05884.pdf">“Natural tts synthesis by
+                    conditioning wavenet
+                    on mel spectrogram predictions</a>,” in <em>IEEE International Conference on Acoustics, Speech and
+                    Signal Processing (ICASSP). IEEE, 2018: 4779-4783.</em>
+                  </p>
+                <p>
+                  <a name="3">[3]</a>
+                    Wang Y, Skerry-Ryan R J, Stanton D, <a class="text-success"
+                    href="https://arxiv.org/pdf/1703.10135.pdf?utm_campaign=nathan.ai%20newsletter&utm_medium=email&utm_source=Revue%20newsletter">
+                    “Tacotron: Towards end-to-end speech synthesis</a>,” in <em>arXiv preprint arXiv:1703.10135, 2017.</em>
+                </p>
+                <p>
+                  <a name="4">[4]</a>
+                    Valin Jean-Marc and Skoglund Jan, <a class="text-success"
+                    href="https://jmvalin.ca/papers/lpcnet_icassp2019.pdf">“LPCNet: Improving neural speech
+                    synthesis through linear prediction</a>,” in <em>IEEE International Conference on Acoustics, Speech
+                    and Signal Processing (ICASSP)
+                    , 2019, pp. 5891–5895.</em>
+                </p>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <!-- <div class="row" id="contact">
+          <div class="col">
+            <h2>Contact</h2>
+            <div></div>
+          </div>
+        </div> -->
+        </div>
+  </main>
+  <footer class="bg-secondary text-light mt-4 pt-3 pb-2 ">
+    <div class="container">
+      <p class="text-center">
+        <small>
+          A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING
+          <br>
+          <a class="text-light"><strong>Xinyong Zhou</strong></a> |
+          <a href="mailto:xyzhou@nwpu-aslp.org?subject=Hello%20again">xyzhou@nwpu-aslp.org</a>
+        </small>
+      </p>
+    </div>
+  </footer>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
