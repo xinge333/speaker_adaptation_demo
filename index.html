@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <title>A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING</title>
+  <title>A NOVEL CROSS-LINGUAL VOICE CLONING APPROACH WITH A FEW TEXT-FREE SAMPLES</title>
 </head>
 <style type="text/css">
   /* table {
@@ -56,8 +56,8 @@
         <div class="row align-items-center">
           <div class="col-md-12">
             <h1><a class="text-light">
-                A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING <br> (Submitted to
-                ICASSP2019)</a></h1>
+                A NOVEL CROSS-LINGUAL VOICE CLONING APPROACH WITH A FEW TEXT-FREE SAMPLES <br> (Submitted to
+                ICASSP2020)</a></h1>
             <p>
               <div class="row">
                 <div class="col-md col-sm-12"><a class="text-light">Xinyong Zhou</a> </div>
@@ -79,7 +79,20 @@
           <h2>Abastract</h2>
           <div>
             <p>
-              For traditional speaker adaptation in text-to-speech (TTS), we generally use many multi-speaker's
+
+              The existing cross-lingual voice cloning approaches face some obvious drawbacks in real applications: 1) such as the need of recordings from bilingual speakers, 
+              or a large amount of multi-speaker audio-text pairs; 2) they need to design a specific method of phoneme sharing cross different languages; 
+              3) they add extra modules to encode speaker and language, which complicates the building pipeline and may be hard to train.
+              <br>
+              This paper proposes a novel cross-lingual voice cloning framework by utilizing bottleneck (BN) features obtained from speaker-independent automatic speech recognition 
+              system in the target language. Firstly, we use audio-text pairs of a single speaker in the target language to train a latent prosody model, which models the relationships 
+              between the text and the BN features. Then the acoustic model, which translates the BN features to the acoustic features, is trained with multi-speaker’s audio data in the target language. 
+              Finally, the acoustic model is fine-tuned with target speaker’s speech in the original language without the corresponding texts, as the BN features are served as the bridge.
+              Our approach has the following advantages: 1) no recordings from bilingual speakers are required; 2) audio-text pairs are not required for acoustic model training; 3) no extra 
+              complicated modules are needed to encode speaker or language. 
+              Experimental results show that, with only several minutes of audio from a new English speaker, our proposed system can 
+              synthesize this speaker’s Mandarin speech with decent naturalness and speaker similarity.
+              <!-- For traditional speaker adaptation in text-to-speech (TTS), we generally use many multi-speaker's
               audio-text pairs to train a generative model and fine-tune it with a small amount of target speaker data.
               However, this approach will face two problems when it comes to cross-language. 
               One is that such a large amount of paired data is difficult to obtain, 
@@ -91,7 +104,7 @@
               In this way, we just need a single speaker's audio-text pairs and multi-speaker's audio data, then we use
               a speaker-independent ASR (SI-ASR) model to extract the bottleneck features corresponding to audio.
               The proposed approach can not only solve the problem of data limitation in conventional method, 
-              but also realize cross-language speaker adaptation.
+              but also realize cross-lingual speaker adaptation. -->
             </p>
           </div>
         </div>
@@ -102,14 +115,21 @@
           <h2>Baseline Approach</h2>
           <div>
             <p>
+              We compared the effects of our proposed and baseline approaches on Mandarin speakers.
+              The baseline approach is a speaker adaptation training approach. The model is based on Tacotron2 <a class="text-success" href="#1">[1]</a>, 
+              which predicts the acoustic features from the phoneme sequence directly. 
+              As shown in Figure 1, the generative model is trained using multi-speaker’s corpus firstly, then fine-tuned with a few target speaker’s audio-text pairs. 
+              
+              <!-- The vocoder used is same as our approach. Since our training data is only Mandarin, this approach can only be applied to Mandarin speaker adaptation. 
               We have compared the effects of proposed approach and baseline approach on Mandarin speakers.
               The baseline experiment is ordinary speaker adaptation training approach based Tacotron2 shown as Figure 1.
               We just use multi-speaker's audio-text pairs to train an generative model, then fine-tune it with a 
-              small amount of target speaker's data.
+              small amount of target speaker's data. -->
             </p>
             <br>
             <div align="center">
-              <embed src="./image/baseline1.svg" style="display:block;width:900px;height:200px" />
+              <embed src="./image/baseline.svg" style="display:block;width:900px;height:260px" />
+              <br>
               <figcaption class="figure-caption text-center">
                 Figure1. Block diagram of baseline system.
             </div>
@@ -122,7 +142,18 @@
           <h2>Proposed Approach</h2>
           <div>
             <p>
-              Our approach consists of two parts.
+              The proposed voicing cloning framework consists of two parts: latent prosody model and acoustic model shown as Figure 2. 
+              Firstly, audio-text pairs from a single speaker in the target language is used to train a Tacotron2-based
+              latent prosody model, which takes text sequence as input, predicting the corresponding BN features with automatic 
+              time alignment. Secondly, the CBHG-structured <a class="text-success" href="#2">[2]</a> acoustic model is trained with multi-speakers audio data in the target language, 
+              which translates BN features to acoustic features. For an unseen speaker, the
+              acoustic model is fine-tuned using a few audio samples of this speaker without the need of the corresponding texts, 
+              as the input BN features to the acoustic model are from the output of the BN extractor. In the synthesis stage, 
+              for any text in the target language, the corresponding BN features can be predicted by the latent prosody model, and then the 
+              acoustic model predicts the acoustic features. Finally, given the acoustic features, a speaker-independent neural vocoder (e.g. LPCNet <a class="text-success" href="#3">[3]</a>)
+              is used to synthesize the speech that sounds like the target speakers voice. 
+
+              <!-- Our approach consists of two parts.
               Firstly, We use text input and bottleneck feature of single speaker to train model 1 based on Tacotron2
               <a class="text-success" href="#2">[2]</a>, which models the 
               relationships between text and bottleneck feature. 
@@ -132,11 +163,12 @@
               We can regard mode 2 as generative voice conversion model, so we use a few minutes audio data of an
               unseen speaker to fine-tune it.
               Finally, we use a speaker-independent LPCNet <a class="text-success" href="#4">[4]</a> vocoder to 
-              synthesize speech of any content that contains the tone of the target speaker.
+              synthesize speech of any content that contains the tone of the target speaker. -->
             </p>
 
             <div align="center">
-              <embed src="./image/our.svg" style="display:block;width:1000px;height:500px" />
+              <embed src="./image/our_v2.svg" style="display:block;width:900px;height:400px" />
+              <br>
               <figcaption class="figure-caption text-center">
                 Figure2. Block diagram of our proposed system.
             </div>
@@ -342,14 +374,14 @@
             <div class="col">
               <h2>References</h2>
               <div>
-                <p>
+                <!-- <p>
                   <a name="1">[1]</a>
                     Lifa Sun, Hao Wang, Shiyin Kang, Kun Li and Helen Meng, <a class="text-success"
                     href="http://www1.se.cuhk.edu.hk/~hccl/publications/pub/2016_IS16_SunLifa.PDF">“Personalized,
                     Cross-lingual TTS Using Phonetic Posteriorgrams</a>,” in <em>INTERSPEECH, 2016, pp. 322-326.</em>
-                </p>
+                </p> -->
                 <p>
-                  <a name="2">[2]</a>
+                  <a name="1">[1]</a>
                     Shen J, Pang R, Weiss R J,
                     <a class="text-success" href="https://arxiv.org/pdf/1712.05884.pdf">“Natural tts synthesis by
                     conditioning wavenet
@@ -357,13 +389,13 @@
                     Signal Processing (ICASSP). IEEE, 2018: 4779-4783.</em>
                   </p>
                 <p>
-                  <a name="3">[3]</a>
+                  <a name="2">[2]</a>
                     Wang Y, Skerry-Ryan R J, Stanton D, <a class="text-success"
                     href="https://arxiv.org/pdf/1703.10135.pdf?utm_campaign=nathan.ai%20newsletter&utm_medium=email&utm_source=Revue%20newsletter">
-                    “Tacotron: Towards end-to-end speech synthesis</a>,” in <em>arXiv preprint arXiv:1703.10135, 2017.</em>
+                    “Tacotron: Towards end-to-end speech synthesis</a>,” in <em>INTERSPEECH 2017: 4006-4010</em>
                 </p>
                 <p>
-                  <a name="4">[4]</a>
+                  <a name="3">[3]</a>
                     Valin Jean-Marc and Skoglund Jan, <a class="text-success"
                     href="https://jmvalin.ca/papers/lpcnet_icassp2019.pdf">“LPCNet: Improving neural speech
                     synthesis through linear prediction</a>,” in <em>IEEE International Conference on Acoustics, Speech
@@ -386,7 +418,7 @@
     <div class="container">
       <p class="text-center">
         <small>
-          A NOVEL LANGUAGE-INDEPENDENT SPEAKER ADAPTATION TRAINING APPROACH IN VOICE CLONING
+          A NOVEL CROSS-LINGUAL VOICE CLONING APPROACH WITH A FEW TEXT-FREE SAMPLES
           <br>
           <a class="text-light"><strong>Xinyong Zhou</strong></a> |
           <a href="mailto:xyzhou@nwpu-aslp.org?subject=Hello%20again">xyzhou@nwpu-aslp.org</a>
